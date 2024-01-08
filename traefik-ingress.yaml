@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: traefik-ingress
+  namespace: test
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    nginx.ingress.kubernetesio/ssl-redirect: "false"
+spec:
+  rules:
+  - host: traefik-test.addissystems.et
+    http:
+      paths:
+      - backend:
+          service:
+            name: hello-app-v1
+            port:
+              number: 80
+        path: /api/v1
+        pathType: Prefix
+  - host: traefik-test.addissystems.et
+    http:
+      paths:
+      - backend:
+          service:
+            name: hello-app-v2
+            port:
+              number: 80
+        path: /api/v2
+        pathType: Prefix
+
+
